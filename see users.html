@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Registered Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Registered Users</h1>
+    </header>
+
+    <section id="users">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Location</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="userList">
+                <!-- Users will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+
+            const userList = document.getElementById("userList");
+            if (users.length === 0) {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td colspan="5" style="text-align: center;">No users registered yet.</td>`;
+                userList.appendChild(row);
+                return;
+            }
+
+            users.forEach((user) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.location}</td>
+                    <td>${user.role}</td>
+                `;
+                userList.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>
